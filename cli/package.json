@@ -1,0 +1,21 @@
+{
+  "name": "cli",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "tsnd index.ts create"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/fs-extra": "^9.0.13",
+    "commander": "^9.3.0",
+    "fs-extra": "^10.1.0",
+    "inquirer": "^8.2.2",
+    "kolorist": "^1.5.1",
+    "ts-node": "^10.8.2"
+  }
+}
