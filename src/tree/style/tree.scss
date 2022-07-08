@@ -1,6 +1,11 @@
 
 .s-tree {
   /* component style */
+  .s-tree-node {
+    padding-left: 0px;
+    display: flex;
+    align-items: center;
+  }
   .s-tree-icon {
     width: 15px;
     height: 15px;

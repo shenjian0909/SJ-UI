@@ -27,6 +27,10 @@ export const treeProps = {
     type: Object as PropType<Array<ITreeNode>>,
     required: true
   },
+  checkable: { // 是否展示复选框
+    type: Boolean,
+    default: false
+  },
   // just for jsx
   onClick: {
     type: [Function, Array] as PropType<EmitType<(e: MouseEvent) => void>>

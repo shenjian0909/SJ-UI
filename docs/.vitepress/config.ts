@@ -1,9 +1,9 @@
 const sidebar = [
   {
-    text: 'Guide',
+    text: '组件',
     items: [
-      { text: 'button', link: '/components/button/' },
-      { text: 'tree', link: '/components/tree/' }
+      { text: 'Button 按钮', link: '/components/button/' },
+      { text: 'Tree 树形控件', link: '/components/tree/' }
     ]
   }
 ]
