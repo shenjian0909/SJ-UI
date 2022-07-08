@@ -68,13 +68,17 @@ export function useTree(node: TreeType) {
   }
 
   // 切换选中状态
-  const toggleCheckNode = (node: IInnerTreeNode) => {
+  const toggleCheckNode = (node: IInnerTreeNode, flag=false) => {
     // 父控制子
     // 获取所有子节点，设置子节点状态和父节点一致
-    const children = getChildren(node)
-    children.forEach(child => {
-      child.checked = node.checked
-    })
+    if (!flag) {
+      node.inChecked = false // 设置为未选中状态
+      const children = getChildren(node)
+      children.forEach(child => {
+        child.checked = node.checked
+        child.inChecked = false  // 重置带选中状态
+      })
+    }
     // 子控制父
     const parentNode = innerData.value.find(item => item.id === node.parentId)
     if(parentNode) { // 父节点存在
@@ -84,11 +88,23 @@ export function useTree(node: TreeType) {
 
       if(allCheckedNodes.length === siblingNodes.length) {
         parentNode.checked = true
+        parentNode.inChecked = false
       } else {
+        if(allCheckedNodes.length > 0) {
+          parentNode.inChecked = true
+        } else {
+          parentNode.inChecked = false
+        }
         parentNode.checked = false
       }
+      // 递归判断父节点状态
+      toggleCheckNode(parentNode, true)
     }
+  }
 
+  const toggleInCheckNode = (node: IInnerTreeNode) => {
+    node.checked = !node.checked
+    toggleCheckNode(node)
   }
 
   return {
@@ -97,6 +113,7 @@ export function useTree(node: TreeType) {
     toggleNode, // 展开/收起
     getChildren, // 获取子节点
     getExpandedChildren, // 获取已展开的子节点
-    toggleCheckNode // 切换节点选中状态
+    toggleCheckNode, // 切换节点选中状态
+    toggleInCheckNode // 切换带选中节点状态
   }
 }

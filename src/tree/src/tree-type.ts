@@ -10,6 +10,7 @@ export interface ITreeNode {
   selected?: boolean; // 点击选中状态
   checked?: boolean; // 勾选状态
   expanded?: boolean; // 展开
+  inChecked?: boolean; // 待选中状态
 
   disableSelect?: boolean;
   disableCheck?: boolean;
