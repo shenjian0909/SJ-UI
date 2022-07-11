@@ -1,11 +1,12 @@
-import { ensureDirSync, writeFileSync } from 'fs-extra'
+import { ensureDirSync, writeFileSync, readFileSync } from 'fs-extra'
 import { resolve } from 'path'
-import { lightBlue, lightGreen } from 'kolorist'
+import { lightGreen } from 'kolorist'
 import genCoreTemplate from '../template/core'
 import genPropTemplate from '../template/types'
 import genStyleTemplate from '../template/style'
 import genIndexTemplate from '../template'
 import genDocsIndexTemplate from '../template/docs'
+import { upperFirst } from '../template/utils'
 export interface MetaComponent {
   name: string
   title: string
@@ -22,6 +23,11 @@ export function createComponent(meta: MetaComponent) {
   // 组件docs文件目录
   const docsDir = resolve('../docs')
   const compDocsDir = resolve(docsDir, `components/${name}`)
+  // 主样式文件 SJ-UI\src\index.scss
+  const basicStylePath = resolve('../src/index.scss')
+  // 组件集合文件 SJ-UI\src\components.ts
+  const baseCompPath = resolve('../src/components.ts')
+  const compName = 'M' + upperFirst(name) // MTree
 
   // 创建目录
   ensureDirSync(compSrcDir)
@@ -48,6 +54,19 @@ export function createComponent(meta: MetaComponent) {
   // 生成docs中的index.md文件
   const docsIndexFilePath = resolve(compDocsDir, 'index.md')
   writeFileSync(docsIndexFilePath, genDocsIndexTemplate(name, title), WRITE_FILE_OPTIONS)
+
+  // 将组件样式拼接到index.scss中
+  const importCompStyle = `@import './${name}/style/${name}.scss'`
+  const baseStyleContent = readFileSync(basicStylePath, WRITE_FILE_OPTIONS)
+  const unionStyleContent = baseStyleContent + '\r\n' + importCompStyle
+  baseStyleContent.indexOf(`${name}.scss`) === -1 && writeFileSync(basicStylePath, unionStyleContent, WRITE_FILE_OPTIONS)
+
+  // 将组件拼接到components.ts中
+  const importCompFile = `export { default as ${compName} } from './${name}'`
+  const baseCompContent = readFileSync(baseCompPath, WRITE_FILE_OPTIONS)
+  const unionCompContent = baseCompContent + '\r\n' + importCompFile
+  baseCompContent.indexOf(`${compName}`) === -1 && writeFileSync(baseCompPath, unionCompContent, WRITE_FILE_OPTIONS)
+
 
   // 创建成功通知
   console.log(
