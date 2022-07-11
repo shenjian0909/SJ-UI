@@ -4,6 +4,7 @@ const sidebar = [
     items: [
       { text: 'Button 按钮', link: '/components/button/' },
       { text: 'Tree 树形控件', link: '/components/tree/' },
+      { text: 'Input 输入框', link: '/components/input/' },
       { text: 'Select 选择器', link: '/components/select/' },
     ]
   }
