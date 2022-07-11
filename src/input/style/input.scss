@@ -1,6 +1,10 @@
 
 .s-input {
   /* component style */
+    position: relative;
+    font-size: 14px;
+    display: inline-block;
+    width: 100%;
   .s-input__inner {
     @apply cursor-pointer; 
     background-color: #fff;
@@ -30,5 +34,37 @@
     border-color: #e4e7ed;
     color: #c0c4cc;
     cursor: not-allowed;
+  }
+  &.s-input--suffix .s-input__inner {
+    padding-right: 30px;
+  }
+  &.s-input--prefix .s-input__inner {
+    padding-left: 30px;
+  }
+  .s-input__suffix {
+    @apply cursor-pointer;
+    position: absolute;
+    height: 100%;
+    right: 5px;
+    top: 0;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #c0c4cc;
+    transition: all .3s;
+    z-index: 22;
+  }
+  .s-input__prefix {
+    @apply cursor-pointer;
+    position: absolute;
+    height: 100%;
+    left: 5px;
+    top: 0;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #c0c4cc;
+    transition: all .3s;
+    z-index: 22;
   }
 }

@@ -24,6 +24,10 @@ export const inputProps = {
     type: Boolean,
     default: false
   },
+  showPassword: { // 显示/隐藏密码
+    type: Boolean,
+    default: false
+  },
   onClick: {
     type: [Function, Array] as PropType<EmitType<(e: MouseEvent) => void>>
   }
