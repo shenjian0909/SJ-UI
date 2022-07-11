@@ -5,12 +5,13 @@ import genCoreTemplate from '../template/core'
 import genPropTemplate from '../template/types'
 import genStyleTemplate from '../template/style'
 import genIndexTemplate from '../template'
+import genDocsIndexTemplate from '../template/docs'
 export interface MetaComponent {
   name: string
   title: string
 }
 export function createComponent(meta: MetaComponent) {
-  const { name } = meta
+  const { name, title } = meta
   const WRITE_FILE_OPTIONS = 'utf-8'
   // 组件目录
   const compDir = resolve('../src', name)
@@ -18,11 +19,15 @@ export function createComponent(meta: MetaComponent) {
   const compSrcDir = resolve(compDir, 'src')
   const styleDir = resolve(compDir, 'style')
   const testDir = resolve(compDir, 'test')
+  // 组件docs文件目录
+  const docsDir = resolve('../docs')
+  const compDocsDir = resolve(docsDir, `components/${name}`)
 
   // 创建目录
   ensureDirSync(compSrcDir)
   ensureDirSync(styleDir)
   ensureDirSync(testDir)
+  ensureDirSync(compDocsDir)
 
   // 创建文件
   // 核心文件：组件文件
@@ -39,6 +44,10 @@ export function createComponent(meta: MetaComponent) {
   // 生成索引文件
   const indexFilePath = resolve(compDir, 'index.ts')
   writeFileSync(indexFilePath, genIndexTemplate(name), WRITE_FILE_OPTIONS)
+
+  // 生成docs中的index.md文件
+  const docsIndexFilePath = resolve(compDocsDir, 'index.md')
+  writeFileSync(docsIndexFilePath, genDocsIndexTemplate(name, title), WRITE_FILE_OPTIONS)
 
   // 创建成功通知
   console.log(

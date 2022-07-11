@@ -1,6 +1,7 @@
 # 按钮 -- Button
 
 :::demo 这是按钮组件
+
 ```vue
 <template>
   <div class="demo-button">
@@ -12,4 +13,13 @@
   </div>
 </template>
 ```
+
 :::
+
+## Attributes
+
+| 参数     | 说明         | 类型    | 可选值                                             | 默认值  |
+| -------- | ------------ | ------- | -------------------------------------------------- | ------- |
+| size     | 尺寸         | string  | medium / small / mini                              | medium  |
+| type     | 类型         | string  | primary / success / warning / danger / info / text | primary |
+| disabled | 是否禁用状态 | boolean | —                                                  | false   |
