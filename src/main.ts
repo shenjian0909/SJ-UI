@@ -1,6 +1,7 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import './index.scss'
-import MButton from './button'
+// 使用全量导出
+import SjUI from './index'
 
-createApp(App).use(MButton).mount('#app')
+createApp(App).use(SjUI).mount('#app')
