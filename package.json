@@ -1,16 +1,17 @@
 {
   "name": "sj-ui",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.4",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
     "lint": "eslint . --ext .ts,.vue,.tsx",
     "docs:dev": "vitepress dev docs",
+    "gen-version": "node scripts/gen-version",
     "docs:build": "vitepress build docs",
     "docs:serve": "vitepress serve docs",
-    "build:lib": "node ./scripts/build.js"
+    "build:lib": "npm run gen-version && node ./scripts/build.js"
   },
   "dependencies": {
     "vue": "^3.2.25"

@@ -5,6 +5,7 @@
 ```vue
 <template>
   <div class="demo-button">
+    <MButton>Default</MButton>
     <MButton type="primary">主要按钮</MButton>
     <MButton type="success">成功按钮</MButton>
     <MButton type="warning">警告按钮</MButton>

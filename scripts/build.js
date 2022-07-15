@@ -5,6 +5,7 @@ const vueJsx = require('@vitejs/plugin-vue-jsx')
 const fsExtra = require('fs-extra')
 // 1.引入vite中的build， 将来用于创建
 const { defineConfig, build } = require('vite')
+const version = require('../package.json').version
 
 // 基础配置
 const baseConfig = defineConfig({
@@ -19,6 +20,9 @@ const outputDir = path.resolve(__dirname, '../build')
 
 // 组件目录
 const compDir = path.resolve(__dirname, '../src')
+
+// readme模板
+const tempReadmeFile = path.resolve(__dirname, './README.md')
 
 // rollup配置
 const rollupOptions = {
@@ -36,11 +40,11 @@ const createPackageJson = (name) => {
   // 预设package.json内容
   const fileStr = `{
     "name": "${ name ? name: 'jacksj-ui'}",
-    "version": "0.0.1",
+    "version": "${version}",
     "main": "${name ? 'index.umd.js' : 'sj-ui.umd.js'}",
     "module": "${name ? 'index.es.js' : 'sj-ui.es.js'}",
     "author": "sj",
-    "github": "https://github.com",
+    "github": "https://github.com/shenjian0909/SJ-UI",
     "description": "组件库",
     "repository": {
       "type": "git",
@@ -50,11 +54,17 @@ const createPackageJson = (name) => {
     "license": "ISC"
   }`
   if (name) { // 按需打包
-    fsExtra.outputFile(path.resolve(outputDir, `${name}/package.json`), fileStr, 'utf-8')
+    fsExtra.outputFile(path.resolve(outputDir, `components/${name}/package.json`), fileStr, 'utf-8')
   } else { // 全量打包
     fsExtra.outputFile(path.resolve(outputDir, 'package.json'), fileStr, 'utf-8')
   }
 }
+
+// 生成readMe文件
+const createReadmeFile = () => {
+  fsExtra.copySync(tempReadmeFile, `${outputDir}/README.md`)
+}
+
 
 // 执行创建
 // 全量构建
@@ -86,7 +96,7 @@ const buildSingle = async (name) => {
         fileName: 'index',
         formats: ['es', 'umd']
       },
-      outDir: path.resolve(outputDir, name)
+      outDir: path.resolve(outputDir, `components/${name}`)
     }
   }))
   createPackageJson(name)
@@ -94,6 +104,7 @@ const buildSingle = async (name) => {
 
 const buildLib = async () => {
   await buildAll()
+  createReadmeFile()
   fs.readdirSync(compDir).filter(name => {
     // 只需要目录不要文件，且里面包含index.ts
     const componentDir = path.resolve(compDir, name)

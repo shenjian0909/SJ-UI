@@ -47,6 +47,22 @@ $pseudo: (
       border: none
     )
   ),
+  success: (
+    hover: (
+      background-color: $s-primary-hover
+    ),
+    focus: (
+      background-color: $s-primary-hover
+    ),
+    active: (
+      background-color: $s-primary-active
+    ),
+    disabled: (
+      color: $s-light-text,
+      background-color: $s-primary-disabled,
+      border: none
+    )
+  ),
   warning: (
     hover: (
       border-color: $s-form-control-line-active,
@@ -90,6 +106,7 @@ $size: (
     font-size: $s-font-size-sm
   ),
   medium: (
+    padding: 8px 15px,
     font-size: $s-font-size-md
   ),
   large: (
